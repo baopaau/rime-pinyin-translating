@@ -2,7 +2,7 @@
 
 配方： ℞ **`bopomofo_pinyin`**
 
-[Rime](https://rime.im) 注音輸入方案
+[Rime](https://rime.im) 漢語拼音輸入方案
 
 使用方式同一般漢語拼音方案，
 
