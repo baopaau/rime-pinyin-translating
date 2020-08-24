@@ -1,0 +1,193 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: gorlor_pinyin
+  name: 拼音：三拼國羅
+  version: "0.3"
+  author:
+    - inzoi <qq:168432731>
+    - hok tic
+    - Tiing
+    
+    - 抱豹 <baopaau@gmail.com>
+  description: |
+    漢語拼音轉寫三拼國羅。
+  
+    三拼國羅是一種普通話羅馬化方案。
+    參考國語羅馬字標調，使用不超過三個字母表示一個完整帶調音節，並保留元音。
+    
+    QQ羣：288975145
+    [漢字／三拼國羅互轉換工具](https://inzoi.github.io/xan.html)
+    
+    需要`terra_pinyin.dict.yaml`。
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, ASCII ]
+  - name: full_shape
+    states: [ 半形, 全形 ]
+  - options: [ noop, simplification, trad_tw, variants_hk, shin_jp ]
+    states: [ 原字, 陆简, 臺正, 港繁, 日新 ]
+    # 修改下行，改變預設用字 [0, 1, 2, 3 --> 對應上表]
+    reset: 0
+  - name: ascii_punct
+    states: [ 。，, ．， ]
+  - name: emoji_suggestion
+    states: [ 無繪文字 , 帶繪文字 ]
+    # 註釋下行，預設禁用 emoji
+    reset: 1
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - table_translator@custom_phrase
+    - reverse_lookup_translator
+    - script_translator
+  filters:
+    - simplifier@trad_tw
+    - simplifier@variants_hk
+    - simplifier@shin_jp
+    - simplifier
+    - simplifier@emoji_suggestion
+    - uniquifier
+
+speller:
+  alphabet: zyxwvutsrqponmlkjihgfedcba12345
+  initials: zyxwvutsrqponmlkjihgfedcba
+  delimiter: " '"
+  algebra:
+    - erase/^xx$/
+    - xform/^r5$/er5/
+    - abbrev/^([a-z]).+$/$1/
+    - abbrev/^([zcs]h).+$/$1/
+    - derive/^([nl])ve/$1ue/
+    - derive/^([jqxy])u/$1v/
+    - derive/un$/uen/
+    - derive/ui/uei/
+    - derive/iu/iou/
+    - derive/ao/oa/
+    - derive/([aeiou])ng/$1gn/
+    - derive/([iu])a(o|ng?)/a$1$2/
+    - derive/^([a-z]+)[0-5]$/$1/
+    - derive/([dtngkhrzcs])o(u|ng)$/$1o/
+    - derive/ong$/on/   
+   
+translator:
+  dictionary: terra_pinyin
+  spelling_hints: 5  # ～字以內候選標註完整帶調拼音
+  # 是否導入語境建議，需配合語言模型
+  contextual_suggestions: true
+  # 同音異形詞最大值，需配合 contextual_suggestions
+  max_homophones: 3
+  # 同形異義詞最大值，需配合 contextual_suggestions
+  max_homographs: 7
+  comment_format: &format
+    # 映射規則版本 0.5
+    - xform/\<r5\>/eb/
+    - xform/ng/g/
+    - xform/(i?)og/ug/
+    - xform/ua([ing])/o$1/
+    - xform/ao/au/
+    - xform/ie/y/
+    - xform/ia([ung])/y$1/
+    - xform/(u|v)e/ui/
+    - xform/\<lo([1-5])\>/lua$1/
+    - xform/\<lvn([1-5])\>/len$1/
+    - xform/uo/o/
+    - xform/er/eu/
+    - xform/v/uu/
+    - xform/\<([zcs])([iu])([1-5])\>/$1$2$2$3/
+    - xform/\<([zcs])un([1-5])\>/$1eu$2/
+    - xform/\<([jqx])on([1-5])\>/$1ua$2/
+    - xform/\<([zcs])u(i|g)([1-5])\>/$1o$2$3/
+    - xform/\<zh/Z/
+    - xform/\<ch/C/
+    - xform/\<sh/S/
+    - xlit/zcs/jqx/
+    - xlit/ZCS/zcs/
+    - xform/\<([^aeo]?)([aiueoy])1\>/$1$2/
+    - xform/\<([^aeo]?)([aiueoy])2\>/$1$2r/
+    - xform/\<([^aeo]?)([aiueoy])3\>/$1$2s/
+    - xform/\<([^aeo]?)([aiueoy])4\>/$1$2h/
+    - xform/\<([^aeo]?)([aiueoy])5\>/$1$2f/
+    - xform/\<(\w?)([aiueo]?)i([ua]?)1\>/$1$2i$3/
+    - xform/\<(\w?)([aiueo]?)i([ua]?)2\>/$1$2j$3/
+    - xform/\<(\w?)([aiueo]?)i([ua]?)3\>/$1$2e$3/
+    - xform/\<(\w?)([aiueo]?)i([ua]?)4\>/$1$2y$3/
+    - xform/\<(\w?)([aiueo]?)i([ua]?)5\>/$1$2z$3/
+    - xform/\<(\w?)([ayoue]?)u([aie]?)1\>/$1$2u$3/
+    - xform/\<(\w?)([ayoue]?)u([aie]?)2\>/$1$2v$3/
+    - xform/\<(\w?)([ayoue]?)u([aie]?)3\>/$1$2o$3/
+    - xform/\<(\w?)([ayoue]?)u([aie]?)4\>/$1$2w$3/
+    - xform/\<(\w?)([ayoue]?)u([aie]?)5\>/$1$2b$3/
+    - xform/\<(\w?)([aiueoy])n1\>/$1$2n/
+    - xform/\<(\w?)([aiueoy])n2\>/$1$2d/
+    - xform/\<(\w?)([aiueoy])n3\>/$1$2t/
+    - xform/\<(\w?)([aiueoy])n4\>/$1$2m/
+    - xform/\<(\w?)([aiueoy])n5\>/$1$2l/
+    - xform/\<(\w?)([aiueoy])g1\>/$1$2g/
+    - xform/\<(\w?)([aiueoy])g2\>/$1$2k/
+    - xform/\<(\w?)([aiueoy])g3\>/$1$2c/
+    - xform/\<(\w?)([aiueoy])g4\>/$1$2q/
+    - xform/\<(\w?)([aiueoy])g5\>/$1$2x/
+    
+  preedit_format:
+    - xform/^(.*)$/$1 / # 顯示所有註釋
+    
+  # 註釋下行，上屏碼不轉寫
+  #preedit_format: *format
+  
+grammar:
+  # 語言模型
+  language: "zh-hant-t-essay-bgw"
+
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
+    
+variants_hk:
+  option_name: variants_hk
+  opencc_config: t2hkf.json
+
+trad_tw:
+  option_name: trad_tw
+  opencc_config: t2tw.json
+
+shin_jp:
+  option_name: shin_jp
+  opencc_config: t2jp.json
+
+emoji_suggestion:
+  opencc_config: emoji.json
+  option_name: emoji_suggestion
+  tips: all
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+  
+recognizer:
+  import_preset: default
