@@ -5,12 +5,12 @@ __include: pinyin_to_mps.schema:/
 
 schema:
   schema_id: pinyin_to_mps2
-  name: 拼音-MPS2
+  name: 拼音-注音二式
   version: "0.1"
   author:
     - Baopaau <baopaau@gmail.com>
   description: |
-    漢語拼音轉譯國語注音第二式
+    漢語拼音轉譯國語注音符號第二式
   dependencies:
     - terra_pinyin
     - cangjie5
