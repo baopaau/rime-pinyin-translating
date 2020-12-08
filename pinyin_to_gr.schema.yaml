@@ -6,7 +6,7 @@ __include: pinyin_to_mps.schema:/
 schema:
   schema_id: pinyin_to_gr
   name: 拼音-國羅
-  version: "0.1"
+  version: "0.2"
   author:
     - Baopaau <baopaau@gmail.com>
   description: |
@@ -96,8 +96,10 @@ translator:
     - xform/\<(\w+)5\>/.$1/
 
     # 正詞法（按需啓用）
-    - xform/^(\w*[aeiouyng]) ([aeiouyng]\w*?)$/$1-$2/
-    - xform/([aeioug])-([yg])/$1$2/
-    - xform/^(\S+?) (\S+?)$/$1$2/
+    - xform/^(\w*[^q]) ([aueo]\w*?)$/$1-$2/
+    - xform/^(\w*[aeyinl]) (i\w*?)$/$1-$2/
+    - xform/^(\w*[nlr]) (h\w*?)$/$1-$2/
+    - xform/^(\w*h) (w\w*?)$/$1-$2/
+    - xform/^(\S+?) \.?(\S+?)$/$1$2/
     
   preedit_format: *format
