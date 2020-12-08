@@ -11,9 +11,18 @@
 另設單擊` v `鍵（按一次輸入第一聲，按兩次輸入第二聲，如此類推）
 
 ## 已收錄的方案
-- [`pinyin_to_mps.schema.yaml`](pinyin_to_mps.schema.yaml) 國語注音符號（第一式）
-- [`pinyin_to_mps2.schema.yaml`](pinyin_to_mps2.schema.yaml) 國語注音符號第二式
-- [`pinyin_to_gr.schema.yaml`](pinyin_to_gr.schema.yaml) 國語羅馬字
+- [`pinyin_to_mps.schema.yaml`](pinyin_to_mps.schema.yaml)：國語注音符號（第一式
+  - [rime-bopomofo](https://github.com/rime/rime-bopomofo)
+- [`pinyin_to_mps2.schema.yaml`](pinyin_to_mps2.schema.yaml)：國語注音符號第二式
+  - [baopaau/rime-mps2](https://github.com/baopaau/rime-mps2)
+- [`pinyin_to_gr.schema.yaml`](pinyin_to_gr.schema.yaml)：國語羅馬字
+  - [Chingyat/rime-romatzyh](https://github.com/chingyat/rime-romatzyh)
+  - [baopaau/rime-romatzyh](https://github.com/baopaau/rime-romatzyh) 
+- [`pinyin_to_yale.schema.yaml`](pinyin_to_yale.schema.yaml)：漢語耶魯拼音
+  - [baopaau/rime-yale-mandarin](https://github.com/baopaau/rime-yale-mandarin)
+- [`pinyin_to_gorlor.schema.yaml`](pinyin_to_gorlor.schema.yaml)：三拼國羅（by Tiing）
+  - [baopaau/rime-gorlor](https://github.com/baopaau/rime-gorlor) 
+
 
     
 ## 安裝
