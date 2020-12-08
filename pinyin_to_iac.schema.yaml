@@ -27,11 +27,11 @@ translator:
     - xform/([iuvaoe](|ng?))vvv\>/${1}3/
     - xform/([iuvaoe](|ng?))vv\>/${1}2/
     - xform/([iuvaoe](|ng?))v\>/${1}1/
-    - xform/([iuvaoe](|ng?))\>/${1}1/ # 補全聲調
+    #- xform/([iuvaoe](|ng?))\>/${1}1/ # 補全聲調
 
     # 開始轉譯
-    - xform/\<r5\>/er5/  # 〜兒
-    - xform/\<wong4\>/weng4/ # 𥥈/𥦷
+    - xform/\<r5?\>/er5/  # 〜兒
+    - xform/\<wong4?\>/weng4/ # 𥥈/𥦷
 
     - xform/iu/iou/
     - xform/ui/uei/
@@ -95,8 +95,8 @@ translator:
     - xform/([iuy])e(ng?)/$1$2/
     - xform/iou/iu/
     - xform/uei/ui/
-    - xform/\<([zcs]r?|r)([1-5q])\>/$1w$2/
-    - xform/eo([1-5q])\>/e$1/
-    - xform/([zcs]r|r)e([1-5q])\>/$1ie$2/
+    - xform/\<([zcs]r?|r)([1-5q]?)\>/$1w$2/
+    - xform/eo([1-5q]?)\>/e$1/
+    - xform/([zcs]r|r)e([1-5q]?)\>/$1ie$2/
     
   preedit_format: *format
