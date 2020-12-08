@@ -12,16 +12,17 @@
 
 ## 已收錄的方案
 - [`pinyin_to_mps.schema.yaml`](pinyin_to_mps.schema.yaml)：國語注音符號（第一式
-  - [rime-bopomofo](https://github.com/rime/rime-bopomofo)
+  - Rime輸入方案：[rime-bopomofo](https://github.com/rime/rime-bopomofo)
 - [`pinyin_to_mps2.schema.yaml`](pinyin_to_mps2.schema.yaml)：國語注音符號第二式
-  - [baopaau/rime-mps2](https://github.com/baopaau/rime-mps2)
+  - Rime輸入方案：[baopaau/rime-mps2](https://github.com/baopaau/rime-mps2)
 - [`pinyin_to_gr.schema.yaml`](pinyin_to_gr.schema.yaml)：國語羅馬字
-  - [Chingyat/rime-romatzyh](https://github.com/chingyat/rime-romatzyh)
-  - [baopaau/rime-romatzyh](https://github.com/baopaau/rime-romatzyh) 
+  - Rime輸入方案：[Chingyat/rime-romatzyh](https://github.com/chingyat/rime-romatzyh)
+  - Rime輸入方案：[baopaau/rime-romatzyh](https://github.com/baopaau/rime-romatzyh) 
 - [`pinyin_to_yale.schema.yaml`](pinyin_to_yale.schema.yaml)：漢語耶魯拼音
-  - [baopaau/rime-yale-mandarin](https://github.com/baopaau/rime-yale-mandarin)
+  - Rime輸入方案：[baopaau/rime-yale-mandarin](https://github.com/baopaau/rime-yale-mandarin)
 - [`pinyin_to_gorlor.schema.yaml`](pinyin_to_gorlor.schema.yaml)：三拼國羅（by Tiing）
-  - [baopaau/rime-gorlor](https://github.com/baopaau/rime-gorlor) 
+  - [原帖介紹](https://www.newsmth.net/nForum/#!article/Linguistics/79330)
+  - Rime輸入方案：[baopaau/rime-gorlor](https://github.com/baopaau/rime-gorlor) 
 
 
     
