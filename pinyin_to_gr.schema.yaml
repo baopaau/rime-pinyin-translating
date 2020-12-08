@@ -1,0 +1,102 @@
+# Rime schema
+# encoding: utf-8
+
+__include: pinyin_to_mps.schema:/
+
+schema:
+  schema_id: pinyin_to_gr
+  name: 拼音-國羅
+  version: "0.1"
+  author:
+    - Baopaau <baopaau@gmail.com>
+  description: |
+    漢語拼音轉譯國語羅馬字
+  dependencies:
+    - terra_pinyin
+    - cangjie5
+
+translator:
+  dictionary: terra_pinyin
+  prism: pinyin_to_mps
+  strict_spelling: true
+  spelling_hints: 7
+  comment_format: &format
+    - 'xlit -/<\;,> 1234134'
+    - xform/([iuvaoe](|ng?))vvvvv\>/${1}5/
+    - xform/([iuvaoe](|ng?))vvvv\>/${1}4/
+    - xform/([iuvaoe](|ng?))vvv\>/${1}3/
+    - xform/([iuvaoe](|ng?))vv\>/${1}2/
+    - xform/([iuvaoe](|ng?))v\>/${1}1/
+    - xform/([iuvaoe](|ng?))\>/${1}1/ # 補全聲調
+
+    # 開始轉譯
+    # 來自`Chingyat/rime-romatzyh`
+    - erase/^xx$/
+    - xform/\<r5/el/
+    - xform/\<([jqx])u/$1v/
+    - xform/([zcsrh])i([1-5])\>/$1Y$2/
+    - xform/\<er/el/
+    - xform/\<zh/j/
+    - xform/\<z([aeiouyY])/tz$1/
+    - xform/\<c([aeiouyY])/ts$1/
+    - xform/\<q/ch/
+    - xform/\<x/sh/
+    - xform/iu([1-5])\>/iou$1/
+    - xform/ui([1-5])\>/uei$1/
+    - xform/ao([1-5])\>/au$1/
+    - xform/([^y])un([1-5])\>/$1uen$2/
+    - xform/v/iu/
+    - xform/\<wu([1-5])\>/u$1/
+    - xlit/yw/iu/
+    - xform/ii/i/
+    - xform/\<([lnmr]\w+)2\>/$1/
+    - xform/\<([lmnr])(\w+1)\>/$1h$2/
+    - xform/1\>//
+    - xform/i(\w+)2\>/y$1/ 
+    - xform/u(\w+)2\>/w$1/    
+    - xform/(a|e|o)(i|u)2\>/$1$2r/
+    - xform/(a|e|o)(|l|n|ng)2\>/$1r$2/
+    - xform/i2\>/yi/
+    - xform/u2\>/wu/
+    - xform/\<ie3\>/yee/
+    - xform/\<uo3\>/woo/
+    - xform/\<i(\w*3)\>/yi$1/
+    - xform/\<u(\w*3)\>/wu$1/
+    - xform/i([aou]\w*)3\>/e$1/
+    - xform/u([ae]\w*)3\>/o$1/
+    - xform/i(n|ng)3\>/ii$1/
+    - xform/ie3\>/iee/
+    - xform/uo3\>/uoo/
+    - xform/ai3\>/ae/
+    - xform/au3\>/ao/
+    - xform/(a|e|o)(|i|l|u|n|ng)3\>/$1$1$2/
+    - xform/i3\>/ii/
+    - xform/u3\>/uu/
+    - xform/\<i4\>/yih/
+    - xform/\<iu4\>/yuh/
+    - xform/\<u4\>/wuh/
+    - xform/\<in4\>/yinn/ 
+    - xform/\<ing4\>/yinq/
+    - xform/\<i(\w+4)\>/y$1/
+    - xform/\<u(\w+4)\>/w$1/
+    - xform/(a|e|o)4\>/$1h/
+    - xform/(a|o)u4\>/$1w/
+    - xform/(e|a)i4\>/$1y/
+    - xform/u4\>/uh/
+    - xform/i4\>/ih/
+    - xform/n4\>/nn/
+    - xform/l4\>/ll/
+    - xform/ng4\>/nq/
+    - xform/Y\>/y/
+    - xform/Y2\>/yr/
+    - xform/Y3\>/yy/
+    - xform/Y4\>/yh/
+    - xform/Y5\>/y/
+    - xform/\<(\w+)5\>/.$1/
+
+    # 正詞法（按需啓用）
+    - xform/^(\w*[aeiouyng]) ([aeiouyng]\w*?)$/$1-$2/
+    - xform/([aeioug])-([yg])/$1$2/
+    - xform/^(\S+?) (\S+?)$/$1$2/
+    
+  preedit_format: *format

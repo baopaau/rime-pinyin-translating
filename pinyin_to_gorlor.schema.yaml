@@ -1,0 +1,83 @@
+# Rime schema
+# encoding: utf-8
+
+__include: pinyin_to_mps.schema:/
+
+schema:
+  schema_id: pinyin_to_gorlor
+  name: 拼音-三拼國羅
+  version: "0.1"
+  author:
+    - Baopaau <baopaau@gmail.com>
+  description: |
+    漢語拼音轉譯Tiing三拼國羅
+  dependencies:
+    - terra_pinyin
+    - cangjie5
+
+translator:
+  dictionary: terra_pinyin
+  prism: pinyin_to_mps
+  strict_spelling: true
+  spelling_hints: 7
+  comment_format: &format
+    - 'xlit -/<\;,> 1234134'
+    - xform/([iuvaoe](|ng?))vvvvv\>/${1}5/
+    - xform/([iuvaoe](|ng?))vvvv\>/${1}4/
+    - xform/([iuvaoe](|ng?))vvv\>/${1}3/
+    - xform/([iuvaoe](|ng?))vv\>/${1}2/
+    - xform/([iuvaoe](|ng?))v\>/${1}1/
+    - xform/([iuvaoe](|ng?))\>/${1}1/ # 補全聲調
+
+    # 開始轉譯
+    - xform/\<r5\>/eb/
+    - xform/\<eh/ep/
+    - xform/ng/g/
+    - xform/(i?)og/ug/
+    - xform/ua([ing])/o$1/
+    - xform/ao/au/
+    - xform/ie/y/
+    - xform/ia([ung])/y$1/
+    - xform/(u|v)e/ui/
+    - xform/\<lo([1-5])\>/lua$1/
+    - xform/\<lvn([1-5])\>/len$1/
+    - xform/uo/o/
+    - xform/er/eu/
+    - xform/v/uu/
+    - xform/\<([zcs])([iu])([1-5])\>/$1$2$2$3/
+    - xform/\<([zcs])un([1-5])\>/$1eu$2/
+    - xform/\<([jqx])on([1-5])\>/$1ua$2/
+    - xform/\<([zcs])u(i|g)([1-5])\>/$1o$2$3/
+    - xform/\<zh/Z/
+    - xform/\<ch/C/
+    - xform/\<sh/S/
+    - xlit/zcs/jqx/
+    - xlit/ZCS/zcs/
+    - xform/\<([^aeo]?)([aiueoy]|ep)1\>/$1$2/ #x
+    - xform/\<([^aeo]?)([aiueoy]|ep)2\>/$1$2r/
+    - xform/\<([^aeo]?)([aiueoy]|ep)3\>/$1$2s/
+    - xform/\<([^aeo]?)([aiueoy]|ep)4\>/$1$2h/
+    - xform/\<([^aeo]?)([aiueoy]|ep)5\>/$1$2f/ #-
+    - xform/\<(\w?)([aiueo]?)i([ua]?)1\>/$1$2i$3/ #/z
+    - xform/\<(\w?)([aiueo]?)i([ua]?)2\>/$1$2j$3/
+    - xform/\<(\w?)([aiueo]?)i([ua]?)3\>/$1$2e$3/
+    - xform/\<(\w?)([aiueo]?)i([ua]?)4\>/$1$2y$3/
+    - xform/\<(\w?)([aiueo]?)i([ua]?)5\>/$1$2z$3/ #/i
+    - xform/\<(\w?)([ayoue]?)u([aie]?)1\>/$1$2u$3/ #//v 與x同表示陰平
+    - xform/\<(\w?)([ayoue]?)u([aie]?)2\>/$1$2v$3/ #//b 與v接近，且音較濁，表示陽調
+    - xform/\<(\w?)([ayoue]?)u([aie]?)3\>/$1$2o$3/
+    - xform/\<(\w?)([ayoue]?)u([aie]?)4\>/$1$2w$3/
+    - xform/\<(\w?)([ayoue]?)u([aie]?)5\>/$1$2b$3/ #//u
+    - xform/\<(\w?)([aiueoy])n1\>/$1$2n/
+    - xform/\<(\w?)([aiueoy])n2\>/$1$2d/
+    - xform/\<(\w?)([aiueoy])n3\>/$1$2t/
+    - xform/\<(\w?)([aiueoy])n4\>/$1$2m/
+    - xform/\<(\w?)([aiueoy])n5\>/$1$2l/
+    - xform/\<(\w?)([aiueoy])g1\>/$1$2g/
+    - xform/\<(\w?)([aiueoy])g2\>/$1$2k/
+    - xform/\<(\w?)([aiueoy])g3\>/$1$2c/
+    - xform/\<(\w?)([aiueoy])g4\>/$1$2q/
+    - xform/\<(\w?)([aiueoy])g5\>/$1$2x/ #f 
+
+  preedit_format: *format
+    

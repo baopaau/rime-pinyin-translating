@@ -1,0 +1,188 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: pinyin_to_mps
+  name: 拼音-注音
+  version: "0.1"
+  author:
+    - Baopaau <baopaau@gmail.com>
+  description: |
+    漢語拼音轉譯國語注音符號第一式
+    空格鍵輸出上屏碼
+
+    聲調輸入方法與地球拼音相同（`- / < \`，或以` ; `代一聲，以` , `代三聲，以` > `代四聲）
+    另設單擊` v `鍵（按一次輸入第一聲，按兩次輸入第二聲，如此類推）
+  dependencies:
+    - terra_pinyin
+    - cangjie5
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, ASCII ]
+  - name: full_shape
+    states: [ 半寬, 全寬 ]
+  - options: [ noop, simplification, trad_tw ]
+    states: [ 原形, 陆简, 臺正 ]
+    # 修改下行註釋，改變預設用字 [0, 1, 2 --> 對應上表]
+    reset: 0
+  - name: ascii_punct
+    states: [ 。，, ．， ]
+  - name: emoji_suggestion
+    states: [ 無繪文字 , 帶繪文字 ]
+    # 取消下行註釋，預設啓動 emoji
+    reset: 1
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - reverse_lookup_translator
+    - table_translator@custom_phrase
+    - script_translator
+  filters:
+    - simplifier@trad_tw
+    - simplifier
+    - simplifier@emoji_suggestion
+    #- reverse_lookup_filter
+    - uniquifier
+
+speller:
+  alphabet: 'zyxwvutsrqponmlkjihgfedcba-;/<,>\'
+  initials: zyxwvutsrqponmlkjihgfedcba
+  delimiter: " '"
+  algebra:
+    - erase/^xx$/
+    - xform/^r5$/er5/  # 〜兒
+    - xform/^wong4$/weng4/ # 𥥈/𥦷
+
+    - derive/^([bpmf])o/$1uo/ # 現代音ㄛ->ㄨㄛ
+    - derive/^([bpmfw])eng/$1ong/ # 讀書音ㄥ->ㄨㄥ(ueng)
+    
+    - abbrev/^([a-z]).+$/$1/
+    - abbrev/^([zcs]h).+$/$1/
+    - derive/^([nl])ve/$1ue/
+    - derive/^([jqxy])u/$1v/
+    - derive/un([1-5])$/uen$1/
+    - derive/ong/ung/
+    - derive/ui/uei/
+    - derive/iu/iou/
+    - derive/ao/oa/
+    - derive/ao/au/
+    - derive/([aeiou])ng/$1gn/
+    - derive/([iu])a(o|ng?)/a$1$2/
+    - derive/^([a-z]+)[0-5]$/$1/
+    - derive/([dtngkhrzcs])o(u|ng)$/$1o/
+    - derive/ong$/on/
+
+    - derive/5$/vvvvv/
+    - derive/4$/vvvv/
+    - derive/3$/vvv/
+    - derive/2$/vv/
+    - derive/1$/v/
+
+    - 'erase/^.*5$/'
+    - 'xlit 1234 -/<\'
+    - 'derive/^(.*)-$/$1;/'
+    - 'derive/^(.*)<$/$1,/'
+    - 'derive/^(.*)\\$/$1>/'
+
+
+translator:
+  dictionary: terra_pinyin
+  prism: pinyin_to_mps
+  strict_spelling: true # fuzz項只在連詞拼寫中有效
+  spelling_hints: 7
+  comment_format: &format
+    - 'xlit -/<\;,> 1234134'
+    - xform/([iuvaoe](|ng?))vvvvv\>/${1}5/
+    - xform/([iuvaoe](|ng?))vvvv\>/${1}4/
+    - xform/([iuvaoe](|ng?))vvv\>/${1}3/
+    - xform/([iuvaoe](|ng?))vv\>/${1}2/
+    - xform/([iuvaoe](|ng?))v\>/${1}1/
+    - xform/([iuvaoe](|ng?))\>/${1}1/ # 補全聲調
+
+    # 開始轉譯
+    - xform/e?r5$/er5/
+    - xform/\<wong4\>/weng4/
+    - xform/iu/iou/
+    - xform/ui/uei/
+    - xform/ong/ung/
+    - xform/\<yi?/i/
+    - xform/\<wu?/u/
+    - xform/iu/v/
+    - xform/\<([jqx])u/$1v/
+    - xform/([iuv])n/$1en/
+    - xform/zh/Z/
+    - xform/ch/C/
+    - xform/sh/S/
+    - xform/ai/A/
+    - xform/ei/I/
+    - xform/ao/O/
+    - xform/ou/U/
+    - xform/ang/K/
+    - xform/eng/G/
+    - xform/an/M/
+    - xform/en/N/
+    - xform/er/R/
+    - xform/eh/E/
+    - xform/([iv])e/$1E/
+    - xform/1//
+    - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
+
+  preedit_format: *format
+    
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
+    
+reverse_lookup:
+  overwrite_comment: true
+  dictionary: cangjie5
+  prism: cangjie5
+  prefix: "`"
+  suffix: "'"
+  tips: 〔倉頡〕
+  comment_format: *format
+
+trad_tw:
+  option_name: trad_tw
+  opencc_config: t2tw.json
+
+emoji_suggestion:
+  opencc_config: emoji.json
+  option_name: emoji_suggestion
+  tips: all
+  
+punctuator:
+  import_preset: symbols
+
+key_binder:
+  import_preset: default
+  bindings:
+    - { when: has_menu, accept: space, send: Shift+Return }
+
+recognizer:
+  import_preset: default
+  patterns:
+    punct: "^/.*$"
+    reverse_lookup: "^`.*$"

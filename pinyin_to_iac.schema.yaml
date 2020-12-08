@@ -1,0 +1,102 @@
+# Rime schema
+# encoding: utf-8
+
+__include: pinyin_to_mps.schema:/
+
+schema:
+  schema_id: pinyin_to_iac
+  name: 拼音-iac式
+  version: "0.1"
+  author:
+    - Baopaau <baopaau@gmail.com>
+  description: |
+    漢語拼音轉譯iac注音轉寫
+  dependencies:
+    - terra_pinyin
+    - cangjie5
+
+translator:
+  dictionary: terra_pinyin
+  prism: pinyin_to_mps
+  strict_spelling: true
+  spelling_hints: 7
+  comment_format: &format
+    - 'xlit -/<\;,> 1234134'
+    - xform/([iuvaoe](|ng?))vvvvv\>/${1}5/
+    - xform/([iuvaoe](|ng?))vvvv\>/${1}4/
+    - xform/([iuvaoe](|ng?))vvv\>/${1}3/
+    - xform/([iuvaoe](|ng?))vv\>/${1}2/
+    - xform/([iuvaoe](|ng?))v\>/${1}1/
+    - xform/([iuvaoe](|ng?))\>/${1}1/ # 補全聲調
+
+    # 開始轉譯
+    - xform/\<r5\>/er5/  # 〜兒
+    - xform/\<wong4\>/weng4/ # 𥥈/𥦷
+
+    - xform/iu/iou/
+    - xform/ui/uei/
+    - xform/ong/ung/
+    - xform/\<yi?/i/
+    - xform/\<wu?/u/
+    - xform/iu/v/
+    - xform/\<([jqx])u/$1v/
+    - xform/([iuv])n/$1en/
+    - xform/\<zhi?/Z/
+    - xform/\<chi?/C/
+    - xform/\<shi?/S/
+    - xform/\<([zcsr])i/$1/
+    - xform/ai/A/
+    - xform/ei/I/
+    - xform/ao/O/
+    - xform/ou/U/
+    - xform/ang/K/
+    - xform/eng/G/
+    - xform/an/M/
+    - xform/en/N/
+    - xform/er/R/
+    - xform/eh/E/
+    - xform/([iv])e/$1E/
+    - xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR12345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙|
+
+    # 聲母
+    - xlit|ㄅㄆㄇㄈㄪ|bpmfv|
+    - xlit|ㄉㄊㄋㄌ|dtnl|
+    - xlit|ㄍㄎㄏ|gkh|
+    - xform|ㄫ|ng|
+    - xlit|ㄐㄑㄒ|jqx|
+    - xform|ㄬ|nj|
+    - xform|ㄓ|zr|
+    - xform|ㄔ|cr|
+    - xform|ㄕ|sr|
+    - xform|ㄖ|r|
+    - xform|ㄗ|z|
+    - xform|ㄘ|c|
+    - xform|ㄙ|s|
+    # 介母
+    - xlit|ㄧㄨㄩ|iuy|
+    # 韻母
+    - xform|ㄚ|a|
+    - xform|ㄛ|o|
+    - xform|ㄜ|eo|
+    - xform|ㄝ|e|
+    - xform|ㄞ|ai|
+    - xform|ㄟ|ei|
+    - xform|ㄠ|au|
+    - xform|ㄡ|ou|
+    - xform|ㄢ|an|
+    - xform|ㄣ|en|
+    - xform|ㄤ|ang|
+    - xform|ㄥ|eng|
+    - xform|ㄦ|er|
+    # 聲調
+    - xlit|ˉˊˇˋ˙・|12345q|
+
+    # 變式
+    - xform/([iuy])e(ng?)/$1$2/
+    - xform/iou/iu/
+    - xform/uei/ui/
+    - xform/\<([zcs]r?|r)([1-5q])\>/$1w$2/
+    - xform/eo([1-5q])\>/e$1/
+    - xform/([zcs]r|r)e([1-5q])\>/$1ie$2/
+    
+  preedit_format: *format
