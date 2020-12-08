@@ -6,7 +6,7 @@ __include: pinyin_to_mps.schema:/
 schema:
   schema_id: pinyin_to_yale
   name: 拼音-耶魯
-  version: "0.1"
+  version: "0.2"
   author:
     - Baopaau <baopaau@gmail.com>
   description: |
@@ -43,15 +43,16 @@ translator:
     - xform/\<x/sy/
 
     - xform/\<([zcs])i([1-5])\>/$1z$2/
-    - xform/\<z([aeiouz])/dz$1/
-    - xform/\<c([aeiouz])/ts$1/
+    - xform/\<([zcs])ii([1-5])\>/$1i$2/ # 尖音字碼表用
+    - xform/\<z([aeiouvz])/dz$1/
+    - xform/\<c([aeiouvz])/ts$1/
     - xform/\<dzz([1-5])\>/dz$1/
 
     - xform/iu([1-5])\>/iou$1/
     - xform/v/iu/
     - xform/ui([1-5])\>/uei$1/
     - xform/ao([1-5])\>/au$1/
-    - xform/([^y])un([1-5])\>/$1uen$2/
+    - xform/([^yi])un([1-5])\>/$1uen$2/
     - xform/ong([1-5])\>/ung$1/
 
     - xform/iu([aeiou])/yw$1/
