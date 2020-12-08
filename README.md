@@ -11,7 +11,7 @@
 另設單擊` v `鍵（按一次輸入第一聲，按兩次輸入第二聲，如此類推）
 
 ## 已收錄的方案
-- [`pinyin_to_mps.schema.yaml`](pinyin_to_mps.schema.yaml)：國語注音符號（第一式
+- [`pinyin_to_mps.schema.yaml`](pinyin_to_mps.schema.yaml)：國語注音符號
   - Rime輸入方案：[rime-bopomofo](https://github.com/rime/rime-bopomofo)
 - [`pinyin_to_mps2.schema.yaml`](pinyin_to_mps2.schema.yaml)：國語注音符號第二式
   - Rime輸入方案：[baopaau/rime-mps2](https://github.com/baopaau/rime-mps2)
