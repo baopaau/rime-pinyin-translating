@@ -27,7 +27,8 @@ translator:
     - xform/([iuvaoe](|ng?))vvv\>/${1}3/
     - xform/([iuvaoe](|ng?))vv\>/${1}2/
     - xform/([iuvaoe](|ng?))v\>/${1}1/
-    - xform/([iuvaoe](|ng?))\>/${1}1/ # 補全聲調
+    - xform/([mnlr].*?[iuvaoe](|ng?))\>/${1}2/ # 補全聲調
+    - xform/([iuvaoe](|ng?))\>/${1}1/
 
     # 開始轉譯
     # 來自`Chingyat/rime-romatzyh`
